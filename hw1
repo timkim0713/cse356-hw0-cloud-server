@@ -1,10 +1,10 @@
 server {
   listen 80 default_server;
   listen [::]:80 default_server;
-  root {{ document_root }};
+  root /var/www;
   index hw0.html;
 
-  server_name {{ server_name }};
+  server_name http://209-94-57-62.us-nyc1.upcloud.host;
   
   location / {
     try_files $uri $uri/ =404;
