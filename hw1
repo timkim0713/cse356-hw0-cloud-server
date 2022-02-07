@@ -1,9 +1,13 @@
+
+
 server {
   listen 80 default_server;
   listen [::]:80 default_server;
-  root /var/wwww;
+  root {{ document_root }};
   index hw0.html;
-  server_name 209-94-57-62.us-nyc1.upcloud.host;
+
+  server_name {{ server_name }};
+  
   location / {
     try_files $uri $uri/ =404;
   }
