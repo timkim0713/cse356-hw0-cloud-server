@@ -1,0 +1,57 @@
+---
+ - hosts: hw1
+   become: yes
+   become_method: sudo
+
+   tasks:
+
+   - name: "install nginx"
+     apt:
+             name: ['nginx']
+             state: latest
+
+
+   - name: Creates directory
+     file:
+             path: /var/www/hw
+             state: directory
+
+   - name: Clone github repo
+     git:
+             repo: https://github.com/timkim0713/cse356-hw0-cloud-server.git
+             dest: /var/www/hw
+             update: yes
+
+
+   - name: copying git files hw0.html
+     copy:
+             src: /var/www/hw/hw0.html
+             dest: /var/www/html
+             remote_src: yes
+
+
+   - name: copying git files hello.png
+     copy:
+             src: /var/www/hw/hello.png
+             dest: /var/www/html
+             remote_src: yes
+
+
+   - name: copying git files config file
+     copy:
+             src: /var/www/hw/hw1
+             dest: /etc/nginx/sites-enabled/hw1
+             remote_src: yes
+       
+
+   - name: remove git local dir
+     file:
+             path: /var/www/hw
+             state: absent
+           
+
+   handlers:
+   - name: restart nginx  
+     service: name=nginx state=restarted enabled=yes
+             
+                             
